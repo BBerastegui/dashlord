@@ -1,138 +1,113 @@
-# DashLord
+# DashLord (translated into English automatically)
 
-Tableau de bord des bonnes pratiques techniques
+Dashboard of technical best practices
 
-L'acquisition des données ainsi que la génération du rapport sont automatisés par des [GitHub actions](https://github.com/features/actions)
+Data acquisition and report generation are automated by [GitHub actions](https://github.com/features/actions)
 
-Exemples :
+Examples:
 
-- https://dashlord.incubateur.net
+- https://dashlord.incubator.net
 - https://socialgouv.github.io/dashlord-fabrique
 - https://mtes-mct.github.io/dashlord
 - https://socialgouv.github.io/dnum-dashboard
 
-## Usage
+## Use
 
-Pour déployer votre version de DashLord :
+To deploy your version of DashLord:
 
-- Créer un nouveau repository [**à partir du template dashlord**](https://github.com/SocialGouv/dashlord)
-- Éditer le fichier `dashlord.yml`
-- Éditer le fichier `.github/workflows/scans.yml` si nécessaire
-- Éditer le fichier `.github/workflows/report.yml` si nécessaire (vérifier le `base-path` où sera publié le site web, il s'agira du nom du repository)
-- Lancer `DashLord scans` dans l'onglet `Actions` de votre projet GitHub
+- Create a new repository [**from the dashlord template**](https://github.com/SocialGouv/dashlord)
+- Edit the `dashlord.yml` file
+- Edit the `.github/workflows/scans.yml` file if necessary
+- Edit the `.github/workflows/report.yml` file if necessary (check the `base-path` where the website will be published, it will be the name of the repository)
+- Launch `DashLord scans` in the `Actions` tab of your GitHub project
 
-Une fois les scans terminés, un rapport sera généré dans la branche `gh-pages` du repository. Vous devez aller dans l'onglet `Settings` du repository pour activer la fonctionnalité "GitHub Pages" et choisir la source `gh-pages`. Ceci permet de publier le rapport sur `https://[organisation].github.io/[repository]` (publiquement).
+Once the scans are complete, a report will be generated in the `gh-pages` branch of the repository. You need to go to the `Settings` tab of the repository to enable the "GitHub Pages" feature and choose the `gh-pages` source. This publishes the report to `https://[organisation].github.io/[repository]` (publicly).
 
 ### GitHub actions
 
-- Le workflow `DashLord scans` permet de lancer un scan sur les URLs, il est executé lors d'un changement dans le fichier `dashlord.yml`
-- Le workflow `DashLord report` est lancé à la fin de chaque `DashLord scans` et produit le rapport sous forme de site web.
+- The `DashLord scans` workflow allows you to launch a scan on URLs, it is executed when there is a change in the `dashlord.yml` file
+- The `DashLord report` workflow is launched at the end of each `DashLord scans` and produces the report as a website.
 
-Ces workflows sont également déclenchables manuellement dans l'onglet "Actions"
+These workflows can also be triggered manually in the "Actions" tab
 
-## Customisation
+## Customization
 
-- Le fichier [`dashlord.yml`](./dashlord.yml) permet de paramétrer les urls et quelques options du tableau de bord
-- Le workflow [`.github/workflows/scans.yml`](./.github/workflows/scans.yml) permet de customiser certains scanners, et régler la fréquence de scan (paramètre `schedule` positionné par défaut tous les dimanches à minuit)
-- Le workflow [`.github/workflows/report.yml`](./.github/workflows/report.yml) permet de générer le rapport web en se basant sur [SocialGouv/dashlord-actions/report](https://github.com/SocialGouv/dashlord-actions).
+- The [`dashlord.yml`](./dashlord.yml) file allows you to configure the urls and some dashboard options
+- The workflow [`.github/workflows/scans.yml`](./.github/workflows/scans.yml) allows you to customize certain scanners, and set the scan frequency (parameter `schedule` set by default every Sunday at midnight)
+- The workflow [`.github/workflows/report.yml`](./.github/workflows/report.yml) generates the web report based on [SocialGouv/dashlord-actions/report](https:/ /github.com/SocialGouv/dashlord-actions).
 
 ### dashlord.yml
 
-💡 Bonne pratique : enlever les slashs à la fin des urls
+💡 Good practice: remove slashes at the end of urls
 
 ```yml
 title: Dashboard title
-description: Bonnes pratiques techniques
-entity: Ministères sociaux
+description: Good technical practices
+entity: Social Ministries
 footer: Powered by SocialGouv
 # `tools` allows to activate only some of the tools in the report
 tools:
-  404: true
-  screenshot: true
-  nmap: true
-  zap: true
-  wappalyzer: true
-  http: true
-  testssl: true
-  lighthouse: true
-  thirdparties: true
-  nuclei: false
-  updownio: true
-  dependabot: true
-  codescan: true
-  stats: true
-  declaration-a11y: true
-  trivy: true
-  ecoindex: true
-  sonarcloud: true
-urls:
-  - url: https://www.free.fr
-    title: Homepage free.fr
-    tags:
-      - telecom
-      - provider
-    repositories: # pour récupérer les alertes de sécu de ces repos
-      - free/free-ui
-      - free/free-css
-    docker: # pour scanner les images avec trivy
-      - ghcr.io/socialgouv/fabrique/frontend
-      - ghcr.io/socialgouv/fabrique/backend
-    tools: # pour desactiver certains outils
-      nmap: false
-    pages: # pour lancer lighthouse sur des pages supplémentaires
-      - /profil
-      - /mentions
-  - url: https://www.lemonde.fr
-    title: Homepage lemonde.fr
-    tags:
-      - presse
+   404: true
+   screenshot: true
+   nmap: true
+   zap: true
+   wappalyzer: true
+   http:true
+   testssl: true
+   lighthouse: true
+   thirdparties: true
+   nucleus: false
+   updownio: true
+   dependabot: true
+   scancode: true
+   statistics: true
+   declaration-a11y: true
+   trivy: true
+   ecoindex: true
+   sonarcloud: true
+URLs:
+   - url: https://www.free.fr
+     title: Homepage free.fr
+     tags:
+       - telecom
+       -provider
+     repositories: # to retrieve security alerts from these repositories
+       - free/free-ui
+       - free/free-css
+     docker: # to scan images with trivy
+       - ghcr.io/socialgouv/fabrique/frontend
+       - ghcr.io/socialgouv/factory/backend
+     tools: # to disable some tools
+       nmap: false
+     pages: # to run lighthouse on additional pages
+       - /profile
+       - /mentions
+   - url: https://www.lemonde.fr
+     title: Homepage lemonde.fr
+     tags:
+       - press
 ```
 
-### Mesures de disponibilité
+### Availability Metrics
 
-DashLord peut monitorer le niveau de performance et de disponibilité de vos applications. (mise en place = 10mins)
+DashLord can monitor the level of performance and availability of your applications. (set up = 10mins)
 
-- Créez un compte sur [updown.io](https://updown.io)
-- Ajoutez-y les urls à monitorer (telles que définies dans dashlord.yml)
-- Activez l'outil avec `updownio: true` dans le fichier dashlord.yml
-- Ajouter votre clé d'API updown.io "readonly" dans un secret GitHub nommé `UPDOWNIO_API_KEY` (onglet settings/secrets)
+- Create an account on [updown.io](https://updown.io)
+- Add the urls to monitor (as defined in dashlord.yml)
+- Activate the tool with `updownio: true` in the dashlord.yml file
+- Add your "readonly" updown.io API key in a GitHub secret named `UPDOWNIO_API_KEY` (settings/secrets tab)
 
-▶ Au prochain scan, les informations updown.io seront remontées dans DashLord
+▶ On next scan, updown.io information will be uploaded to DashLord
 
-## Outils
+## Tools
 
-Chaque outil peut être activé/désactivé dans le rapport avec la clé `tools` de dashlord.yml.
+Each tool can be enabled/disabled in the report with the `tools` key from dashlord.yml.
 
-| Repo                                                                                      | desc                                   |
-| ----------------------------------------------------------------------------------------- | -------------------------------------- |
-| [SocialGouv/dashlord-actions](https://github.com/SocialGouv/dashlord-actions)             | Dashlord specific actions              |
-| [SocialGouv/dashlord-nuclei-action](https://github.com/SocialGouv/dashlord-nuclei-action) | Dump nuclei result                     |
-| [SocialGouv/httpobs-action](https://github.com/SocialGouv/httpobs-action)                 | Dump Mozilla HTTP Observatory result   |
-| [SocialGouv/thirdparties-action](https://github.com/SocialGouv/thirdparties-action)       | Dump third party scripts scan result   |
-| [SocialGouv/wappalyzer-action](https://github.com/SocialGouv/wappalyzer-action)           | Dump Wappalyzer scan result            |
-| [MTES-MCT/dependabotalerts-action](https://github.com/MTES-MCT/dependabotalerts-action)   | Dump Github dependabot security alerts |
-| [MTES-MCT/codescanalerts-action](https://github.com/MTES-MCT/codescanalerts-action)       | Dump Github CodeQL security alerts     |
-| [MTES-MCT/updownio-action](https://github.com/MTES-MCT/updownio-action)                   | Dump updown.io stats                   |
-| [MTES-MCT/nmap-action](https://github.com/MTES-MCT/nmap-action)                           | Dump nmap port scan stats              |
-| [MTES-MCT/stats-action](https://github.com/MTES-MCT/stats-action)                         | Detect /stats page.                    |
-| [SocialGouv/thirdparties](https://github.com/SocialGouv/thirdparties)                     | thirdparty scripts database            |
-| [swinton/screenshot-website](https://github.com/swinton/screenshot-website)               | grab website screenshot                |
-| [SocialGouv/detect-404-action](https://github.com/SocialGouv/detect-404-action)           | detect 404 errors                      |
-| [aquasecurity/trivy-action](https://github.com/aquasecurity/trivy-action)                 | Scan docker images vulnerabilities     |
-
-## Contribute
-
-Vous pouvez contribuer en remontant des issues de qualité, en améliorant la documentation, ou en ajoutant du code.
-
-🤗 Toutes les suggestions sont bienvenues.
-
-cf [CONTRIBUTING.md](./CONTRIBUTING.md)
-
-### Dev
-
-DashLord fonctionne en deux étapes :
-
-1. **Acquisition des données** : Pour chaque URL, chaque outil est executé et génère un fichier JSON qui sera versionné dans le repository
-2. **Génération du rapport** : À partir des données existantes, l'action [report](https://github.com/SocialGouv/dashlord-actions) aggrège, compresse les résultats et produit un rapport web statique.
-
-Voir aussi : [SocialGouv/dashlord-actions](https://github.com/SocialGouv/dashlord-actions)
+| repos | descend |
+| -------------------------------------------------- --------------------------------------- | -------------------------------------- |
+| [SocialGouv/dashlord-actions](https://github.com/SocialGouv/dashlord-actions) | Dashlord specific actions |
+| [SocialGouv/dashlord-nuclei-action](https://github.com/SocialGouv/dashlord-nuclei-action) | Dump nuclei result |
+| [SocialGouv/httpobs-action](https://github.com/SocialGouv/httpobs-action) | Dump Mozilla HTTP Observatory result |
+| [SocialGouv/thirdparties-action](https://github.com/SocialGouv/thirdparties-action) | Dump third party scripts scan result |
+| [SocialGouv/wappalyzer-action](https://github.com/SocialGouv/wappalyzer-action) | Dump Wappalyzer scan result |
+| [MTES-MCT/dependabotalerts-action](https://github.com/MTES-MCT/dependabotalerts-action)
